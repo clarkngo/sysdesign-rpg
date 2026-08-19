@@ -1,0 +1,16 @@
+---
+description: Always archive replaced or deleted src/assets files before overwriting
+globs: src/assets/**
+alwaysApply: true
+---
+
+# Asset archive policy
+
+Before deleting or replacing any file in `src/assets/` (except under `src/assets/archive/`):
+
+1. Create `src/assets/archive/YYYY-MM-DD-<short-reason>/`.
+2. Move or copy the outgoing asset into that folder (keep the original filename).
+3. Add/update `MANIFEST.md` in that folder describing what was retired and what replaces it.
+4. Only then write the new asset into `src/assets/`.
+
+See `src/assets/archive/README.md`. Never permanently delete an active art asset without an archive copy.
