@@ -1,11 +1,12 @@
 import { useEffect, useRef } from 'react'
 import combatBg from '../assets/combat-bg.png'
 import heroArt from '../assets/hero.png'
-import enemyArt from '../assets/enemy-herd.png'
+import { BOSS_ART } from '../game/bestiary'
 import { playSfx } from '../audio/gameAudio'
 import {
   isFlowCard,
   isMcqCard,
+  type ArtKey,
   type ChoiceId,
   type EncounterCard,
   type FlowCard,
@@ -15,11 +16,14 @@ import { MASTERY_LABELS } from '../game/encounters'
 import type { Phase, ResolveResult } from '../game/useEncounter'
 import FlowPuzzle from './FlowPuzzle'
 
+const ENEMY_ART = BOSS_ART
+
 interface Props {
   enemyName: string
   enemyMaxHp: number
   enemyHp: number
   uptime: number
+  artKey: ArtKey
   card: EncounterCard | null
   phase: Phase
   scenarioIndex: number
@@ -61,6 +65,7 @@ export default function CombatScreen({
   enemyMaxHp,
   enemyHp,
   uptime,
+  artKey,
   card,
   phase,
   scenarioIndex,
@@ -80,7 +85,7 @@ export default function CombatScreen({
   const lastSfxKey = useRef<string | null>(null)
   const isFlow = card ? isFlowCard(card) : false
   const isMcq = card ? isMcqCard(card) : false
-
+  const enemyArt = ENEMY_ART[artKey]
   useEffect(() => {
     if (!lastResult) return
     const key = `${lastResult.kind}-${lastResult.choice}-${lastResult.submittedOrder?.join(',')}-${lastResult.correct}-${lastResult.damageDealt}`
