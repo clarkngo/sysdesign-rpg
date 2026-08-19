@@ -8,6 +8,23 @@
 
 Wrong answers **do not demote mastery**. Learning lives in the **choice set**: after every answer, show a full A–D trade-off board. Missed concepts are **re-queued as variants** later in the same fight (spaced practice), with soft penalties only (uptime + small boss heal).
 
+## Loop diagram
+
+```mermaid
+flowchart TD
+  draw[DrawUnusedScenario] --> choose[Pick_A_to_D]
+  choose -->|correct| hit[DamagePlusXP]
+  choose -->|wrong| miss[UptimeHit_noMasteryLoss]
+  hit --> reveal[ShowFullTradeoffBoard]
+  miss --> reveal
+  reveal --> spaced{MissedConcept}
+  spaced -->|yes| requeue[RequeueVariantLater]
+  spaced -->|no| next
+  requeue --> next{BossHP_and_Deck}
+  next -->|continue| draw
+  next -->|done| win[IncidentContained]
+```
+
 ## Why
 
 | Approach | Rejected because |

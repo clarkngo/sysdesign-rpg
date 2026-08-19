@@ -191,22 +191,23 @@ export default function CombatScreen({
         >
           <div className="stage-vignette" />
 
-          <div className="turn-chip">
-            Scenario {Math.min(scenarioIndex, scenarioTotal)}/{scenarioTotal}
-            {isFlow ? ' · Flow' : ''}
-          </div>
-
-          <div className="enemy-plate">
-            <span className="enemy-name">{enemyName}</span>
-            <div className="hp-track">
-              <div
-                className="hp-fill"
-                style={{ width: hpFill(enemyHp, enemyMaxHp) }}
-              />
+          <div className="battle-hud">
+            <div className="turn-chip">
+              Scenario {Math.min(scenarioIndex, scenarioTotal)}/{scenarioTotal}
+              {isFlow ? ' · Flow' : ''}
             </div>
-            <span className="hp-label">
-              {enemyHp}/{enemyMaxHp}
-            </span>
+            <div className="enemy-plate">
+              <span className="enemy-name">{enemyName}</span>
+              <div className="hp-track">
+                <div
+                  className="hp-fill"
+                  style={{ width: hpFill(enemyHp, enemyMaxHp) }}
+                />
+              </div>
+              <span className="hp-label">
+                {enemyHp}/{enemyMaxHp}
+              </span>
+            </div>
           </div>
 
           <div className="fighter hero">

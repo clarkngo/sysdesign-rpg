@@ -320,7 +320,16 @@
 }
 
 .bestiary-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
   margin-top: 18px;
+}
+
+.bestiary-footer .hotkey-hint {
+  margin: 0;
 }
 
 @media (max-width: 900px) {
@@ -514,11 +523,23 @@
   to { opacity: 0; }
 }
 
-.turn-chip {
+.battle-hud {
   position: absolute;
-  top: 22px;
-  left: 24px;
-  z-index: 2;
+  top: 14px;
+  left: 16px;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  max-width: min(280px, 40%);
+}
+
+.turn-chip {
+  position: static;
+  top: auto;
+  left: auto;
+  z-index: auto;
   padding: 6px 12px;
   border-radius: 999px;
   font-size: 0.78rem;
@@ -531,25 +552,27 @@
 }
 
 .enemy-plate {
-  position: absolute;
-  top: 22px;
-  right: 24px;
-  z-index: 2;
-  width: 220px;
-  padding: 10px 12px 12px;
+  position: relative;
+  z-index: auto;
+  width: 100%;
+  padding: 8px 10px 10px;
   border-radius: 12px;
-  background: rgba(12, 16, 28, 0.72);
+  background: rgba(12, 16, 28, 0.82);
   border: 1px solid rgba(212, 181, 106, 0.45);
   backdrop-filter: blur(4px);
+  box-sizing: border-box;
 }
 
 .enemy-name {
   display: block;
   font-family: 'Cinzel', serif;
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   letter-spacing: 0.04em;
   color: var(--gold-bright);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .hp-track {
@@ -568,8 +591,8 @@
 
 .hp-label {
   display: block;
-  margin-top: 5px;
-  font-size: 0.8rem;
+  margin-top: 4px;
+  font-size: 0.75rem;
   opacity: 0.9;
   text-align: right;
 }
@@ -595,10 +618,20 @@
 }
 
 .fighter.foe {
-  right: 10%;
-  bottom: 8%;
-  width: min(200px, 30%);
+  right: 5%;
+  bottom: 5%;
+  width: min(260px, 36%);
+  max-height: 62%;
+  z-index: 1;
   animation: bob 2.2s ease-in-out infinite;
+}
+
+.fighter.foe img {
+  width: 100%;
+  height: auto;
+  max-height: min(260px, 52vh);
+  object-fit: contain;
+  object-position: bottom center;
 }
 
 .fighter.foe.defeated {
@@ -1204,21 +1237,23 @@
 
   .fighter.foe {
     right: 4%;
-    bottom: 6%;
-    width: 36%;
+    bottom: 4%;
+    width: min(200px, 40%);
+    max-height: 58%;
+  }
+
+  .fighter.foe img {
+    max-height: min(200px, 40vh);
+  }
+
+  .battle-hud {
+    max-width: min(220px, 48%);
   }
 
   .solve-panel {
     max-height: none;
     min-height: 0;
     padding: 12px 12px 14px;
-  }
-
-  .enemy-plate {
-    width: 170px;
-    top: 16px;
-    right: 16px;
-    padding: 8px 10px 10px;
   }
 
   .enemy-name {
