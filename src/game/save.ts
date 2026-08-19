@@ -1,4 +1,4 @@
-import type { ChoiceId, MasteryKey } from './encounters'
+import type { ChoiceId, Difficulty, MasteryKey } from './encounters'
 import type { Phase, ResolveResult } from './useEncounter'
 
 export const SAVE_VERSION = 1
@@ -8,6 +8,7 @@ export interface GameSave {
   version: number
   exportedAt: string
   bossId: string
+  difficulty?: Difficulty
   enemyHp: number
   uptime: number
   mastery: Record<MasteryKey, number>

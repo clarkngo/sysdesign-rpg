@@ -1,17 +1,27 @@
 import { useEffect, useState } from 'react'
 import {
+  cycleBgmTheme,
+  getBgmLabel,
   isBgmMuted,
   isSfxMuted,
   setBgmMuted,
+  setBgmTheme,
   setSfxMuted,
   startBgm,
   unlockAudio,
+  type BgmTheme,
 } from '../audio/gameAudio'
 
-export default function AudioControls() {
+interface Props {
+  /** Auto theme from screen/boss; click track name to cycle. */
+  theme?: BgmTheme
+}
+
+export default function AudioControls({ theme }: Props) {
   const [bgmOff, setBgmOff] = useState(isBgmMuted)
   const [sfxOff, setSfxOff] = useState(isSfxMuted)
   const [ready, setReady] = useState(false)
+  const [trackLabel, setTrackLabel] = useState(() => getBgmLabel())
 
   useEffect(() => {
     const kick = async () => {
@@ -29,6 +39,16 @@ export default function AudioControls() {
     }
   }, [])
 
+  useEffect(() => {
+    if (!theme) return
+    void (async () => {
+      await unlockAudio()
+      setBgmTheme(theme)
+      setTrackLabel(getBgmLabel(theme))
+      if (!bgmOff) await startBgm()
+    })()
+  }, [theme, bgmOff])
+
   async function enable() {
     await unlockAudio()
     await startBgm()
@@ -36,7 +56,10 @@ export default function AudioControls() {
   }
 
   return (
-    <div className="audio-controls" title={ready ? undefined : 'Click to enable audio'}>
+    <div
+      className="audio-controls"
+      title={ready ? undefined : 'Click to enable audio'}
+    >
       <button
         type="button"
         className="audio-toggle"
@@ -50,6 +73,19 @@ export default function AudioControls() {
         }}
       >
         {bgmOff ? 'Music off' : 'Music on'}
+      </button>
+      <button
+        type="button"
+        className="audio-toggle track-toggle"
+        aria-label={`Music track: ${trackLabel}. Click for next track.`}
+        title={`${trackLabel} — click for next`}
+        onClick={async () => {
+          await enable()
+          const next = cycleBgmTheme()
+          setTrackLabel(getBgmLabel(next))
+        }}
+      >
+        ♪ {trackLabel}
       </button>
       <button
         type="button"

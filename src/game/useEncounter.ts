@@ -3,8 +3,10 @@ import {
   HINT_UPTIME_COST,
   isFlowCard,
   isMcqCard,
+  withDifficulty,
   type BossEncounter,
   type ChoiceId,
+  type Difficulty,
   type EncounterCard,
   type MasteryKey,
 } from './encounters'
@@ -121,10 +123,13 @@ function firstMismatch(submitted: string[], correct: string[]) {
   return null
 }
 
-export function useEncounter(boss: BossEncounter) {
+export function useEncounter(boss: BossEncounter, difficulty: Difficulty) {
   const [hydrated] = useState(() => {
     const existing = loadSave()
-    return existing ? hydrateFromSave(boss, existing) : freshState(boss)
+    if (existing && existing.bossId === boss.id) {
+      return hydrateFromSave(boss, existing)
+    }
+    return freshState(boss)
   })
 
   const [enemyHp, setEnemyHp] = useState(hydrated.enemyHp)
@@ -161,6 +166,7 @@ export function useEncounter(boss: BossEncounter) {
       version: 1,
       exportedAt: new Date().toISOString(),
       bossId: boss.id,
+      difficulty,
       enemyHp,
       uptime,
       mastery,
@@ -176,6 +182,7 @@ export function useEncounter(boss: BossEncounter) {
     }
   }, [
     boss.id,
+    difficulty,
     enemyHp,
     uptime,
     mastery,
@@ -429,6 +436,11 @@ export function useEncounter(boss: BossEncounter) {
     setFlowHintFirst(false)
   }, [phase, enemyHp, remaining, requeue])
 
+  const displayCard = useMemo(
+    () => (card ? withDifficulty(card, difficulty) : null),
+    [card, difficulty],
+  )
+
   return {
     boss,
     enemyHp,
@@ -436,7 +448,7 @@ export function useEncounter(boss: BossEncounter) {
     mastery,
     overall,
     phase,
-    card,
+    card: displayCard,
     scenarioIndex,
     scenarioTotal,
     eliminated,
