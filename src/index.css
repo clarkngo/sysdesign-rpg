@@ -1,0 +1,44 @@
+:root {
+  --ink: #0e1524;
+  --panel: #152238;
+  --panel-2: #1b2b44;
+  --gold: #d4b56a;
+  --gold-bright: #f0d48a;
+  --cream: #f4efe3;
+  --hp: #e24b4b;
+  --hp-dark: #8f1f2a;
+  --ok: #3ecf8e;
+  --miss: #ff7a6e;
+  --frame: #1a2233;
+  --frame-edge: #8b7340;
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  background:
+    radial-gradient(ellipse at 30% 0%, #2a3d5c 0%, transparent 45%),
+    radial-gradient(ellipse at 90% 20%, #1a2a40 0%, transparent 40%),
+    linear-gradient(180deg, #0b101a 0%, #121925 100%);
+  color: var(--cream);
+  min-height: 100vh;
+  padding: 28px 32px 40px;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
