@@ -191,11 +191,17 @@ export default function CombatScreen({
         >
           <div className="stage-vignette" />
 
-          <div className="battle-hud">
-            <div className="turn-chip">
-              Scenario {Math.min(scenarioIndex, scenarioTotal)}/{scenarioTotal}
-              {isFlow ? ' · Flow' : ''}
-            </div>
+          <div className="turn-chip">
+            Scenario {Math.min(scenarioIndex, scenarioTotal)}/{scenarioTotal}
+            {isFlow ? ' · Flow' : ''}
+          </div>
+
+          <div className="fighter hero">
+            <img src={heroArt} alt="Cloud Architect" />
+            <div className="uptime-chip">Uptime {uptime.toFixed(2)}%</div>
+          </div>
+
+          <div className={`fighter foe ${defeated ? 'defeated' : ''}`}>
             <div className="enemy-plate">
               <span className="enemy-name">{enemyName}</span>
               <div className="hp-track">
@@ -208,14 +214,6 @@ export default function CombatScreen({
                 {enemyHp}/{enemyMaxHp}
               </span>
             </div>
-          </div>
-
-          <div className="fighter hero">
-            <img src={heroArt} alt="Cloud Architect" />
-            <div className="uptime-chip">Uptime {uptime.toFixed(2)}%</div>
-          </div>
-
-          <div className={`fighter foe ${defeated ? 'defeated' : ''}`}>
             <img src={enemyArt} alt={enemyName} />
           </div>
         </div>
